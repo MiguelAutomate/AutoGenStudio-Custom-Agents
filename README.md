@@ -1,25 +1,49 @@
-# AutogenStudio 0.4 Custom Agents
+# AutoGen Studio 0.4 Custom Agents
 
-This repository contains custom agents for AutogenStudio 0.4, including a **Gallery Agent** and a **Team Builder Agent** with a **Calculator Assistant**.
+![AutoGen Logo](https://raw.githubusercontent.com/microsoft/autogen/main/website/static/img/autogen_logo.png)
 
-## Agents
+A collection of custom agents, tools, and configurations for AutoGen Studio 0.4, extending the default capabilities with specialized components for enhanced human-in-loop conversations and task automation.
 
-### 1. Gallery Agent
-- **Name**: `gallery_agent`
-- **Description**: A custom agent designed for efficient interaction and management of gallery-based operations.
+## Features
 
-### 2. Team Builder Agent (Calculator Team)
-- **Name**: `calculator_team`
-- **Description**: A team-based agent that performs arithmetic calculations using a calculator tool.
-- **Components**:
-  - **Agent Name**: `assistant_agent`
-  - **Model**: `OllamaChatCompletionClient` (using `codellama:13b`)
-  - **Tools**: 
-    - **Calculator**: A simple arithmetic tool supporting `+`, `-`, `*`, `/`.
-  - **Termination Condition**: Max 3 messages before termination.
+- **Diverse Agent Types**: Includes specialized agents like virtual assistants, chatbots, configuration experts, and more
+- **Extended Model Support**: Configurations for various models including GPT-4o mini, Llama3.1, DeepSeek Coder, and others
+- **Comprehensive Toolset**: 15+ tools ranging from calculators to API integration and workflow automation
+- **Flexible Termination Conditions**: Multiple termination strategies for conversation control
+- **Human-in-Loop Teams**: Pre-configured teams for collaborative human-AI interaction
 
-## Installation & Usage
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/autogenstudio-agents.git
-   cd autogenstudio-agents
+## Components Overview
+
+### Agents
+- `human_in_loop_team`: Pre-configured team for human-AI collaboration
+- `llama3_agent`: Assistant powered by Ollama's Llama3.1 model
+- `virtual_assistant`: For booking appointments and making reservations
+- `chatbot`: Natural language conversational agent
+- `config_expert`: Validates and modifies configurations
+- `model_config`: Manages model configurations
+- `tool_config`: Manages tool configurations
+
+### Models
+- GPT-4o mini
+- Llama3.1
+- DeepSeek Coder v2
+- Qwen2.5 Coder
+- Dolphin-Llama3
+- CodeLlama 13b
+
+### Tools
+- **Basic Tools**: Calculator, website fetcher
+- **Advanced Tools**: 
+  - Task parser
+  - Domain knowledge base
+  - Model trainer
+  - Workflow automation
+  - API integration
+  - Error handling
+  - Data visualization
+
+## Installation
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/MiguelAutomate/autogenstudio-custom-agents.git
