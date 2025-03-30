@@ -1,0 +1,466 @@
+{
+    "id": "gallery_default",
+    "name": "Default Component Gallery",
+    "metadata": {
+      "author": "AutoGen Team",
+      "created_at": "2024-12-12T00:00:00Z",
+      "updated_at": "2025-01-13T04:38:46.217Z",
+      "version": "1.0.0",
+      "description": "A default gallery containing basic components for human-in-loop conversations",
+      "tags": [
+        "human-in-loop",
+        "assistant"
+      ],
+      "license": "MIT",
+      "category": "conversation"
+    },
+    "items": {
+      "teams": [
+        {
+          "component_type": "team",
+          "description": "A team with an assistant agent and a user agent to enable human-in-loop task completion in a round-robin fashion",
+          "name": "human_in_loop_team",
+          "participants": [
+            {
+              "component_type": "agent",
+              "description": "An assistant agent that can help users complete tasks",
+              "name": "assistant_agent",
+              "agent_type": "AssistantAgent",
+              "system_message": "You are a helpful assistant. Solve tasks carefully. You also have a calculator tool which you can use if needed. When the task is done respond with TERMINATE.",
+              "model_client": {
+                "component_type": "model",
+                "description": "A GPT-4o mini model",
+                "model": "gpt-4o-mini",
+                "model_type": "OpenAIChatCompletionClient"
+              },
+              "tools": [
+                {
+                  "component_type": "tool",
+                  "name": "calculator",
+                  "description": "A simple calculator that performs basic arithmetic operations between two numbers",
+                  "content": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == '+':\n            return str(a + b)\n        elif operator == '-':\n            return str(a - b)\n        elif operator == '*':\n            return str(a * b)\n        elif operator == '/':\n            if b == 0:\n                return 'Error: Division by zero'\n            return str(a / b)\n        else:\n            return 'Error: Invalid operator. Please use +, -, *, or /'\n    except Exception as e:\n        return f'Error: {str(e)}'",
+                  "tool_type": "PythonFunction"
+                }
+              ]
+            },
+            {
+              "component_type": "agent",
+              "description": "A user agent that is driven by a human user",
+              "name": "user_agent",
+              "agent_type": "UserProxyAgent",
+              "tools": []
+            }
+          ],
+          "team_type": "RoundRobinGroupChat",
+          "termination_condition": {
+            "component_type": "termination",
+            "description": "Terminate the conversation when the user mentions 'TERMINATE' or after 10 messages",
+            "termination_type": "CombinationTermination",
+            "operator": "or",
+            "conditions": [
+              {
+                "component_type": "termination",
+                "description": "Terminate the conversation when the user mentions 'TERMINATE'",
+                "termination_type": "TextMentionTermination",
+                "text": "TERMINATE"
+              },
+              {
+                "component_type": "termination",
+                "description": "Terminate the conversation after 10 messages",
+                "termination_type": "MaxMessageTermination",
+                "max_messages": 10
+              }
+            ]
+          }
+        }
+      ],
+      "components": {
+        "agents": [
+          {
+            "component_type": "agent",
+            "description": "A user agent that is driven by a human user.",
+            "name": "user_proxy",
+            "agent_type": "UserProxyAgent",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "An assistant agent powered by Ollama's llama3.1 model.",
+            "name": "llama3_agent",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a helpful assistant. Solve tasks carefully. When done, respond with TERMINATE.",
+            "model_client": {
+              "component_type": "model",
+              "description": "Ollama's llama3.1 model",
+              "model": "llama3.1",
+              "model_type": "OllamaChatCompletionClient",
+              "api_base": "http://localhost:11434"
+            },
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "A group chat manager that facilitates multi-agent conversations",
+            "name": "group_chat_manager",
+            "agent_type": "GroupChatManager",
+            "system_message": "You are a group chat manager. Facilitate the conversation between agents and ensure it stays on track.",
+            "model_client": {
+              "component_type": "model",
+              "description": "A GPT-4o mini model",
+              "model": "gpt-4o-mini",
+              "model_type": "OpenAIChatCompletionClient"
+            },
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "Collects user input from the playground chat.",
+            "name": "input_gatherer",
+            "agent_type": "UserProxyAgent",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "Generates agent roles and configurations based on user input.",
+            "name": "role_generator",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a role generator. Create configurations for agents based on user input.",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "Validates and tweaks configurations based on input data.",
+            "name": "config_expert",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a config expert. Validate and modify configurations to match AutoGen Studio 0.4 format.",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "Manages configurations for models used by agents.",
+            "name": "model_config",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a model config agent. Generate and validate model configurations.",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "Manages configurations for tools used by agents.",
+            "name": "tool_config",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a tool config agent. Generate and validate tool configurations.",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "An intelligent assistant that can perform tasks such as booking appointments, sending emails, or making reservations.",
+            "name": "virtual_assistant",
+            "agent_type": "AssistantAgent",
+            "system_message": "You are a virtual assistant. Book appointments, send emails, or make reservations for users.",
+            "tools": []
+          },
+          {
+            "component_type": "agent",
+            "description": "A conversational AI agent that can engage with users in natural language and provide information on various topics.",
+            "name": "chatbot",
+            "agent_type": "ConversationalAgent",
+            "system_message": "You are a chatbot. Engage with users in natural language and provide information on various topics.",
+            "tools": []
+          }
+        ],
+        "models": [
+          {
+            "component_type": "model",
+            "description": "A GPT-4o mini model",
+            "model": "gpt-4o-mini",
+            "model_type": "OpenAIChatCompletionClient"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's llama3.1 model",
+            "model": "llama3.1",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's deepseek-coder-v2 model",
+            "model": "deepseek-coder-v2",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's llama3.1 model",
+            "model": "llama3.1",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's qwen2.5-coder:14b model",
+            "model": "qwen2.5-coder:14b",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's dolphin-llama3 model",
+            "model": "dolphin-llama3",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          },
+          {
+            "component_type": "model",
+            "description": "Ollama's codellama:13b model",
+            "model": "codellama:13b",
+            "model_type": "OllamaChatCompletionClient",
+            "api_base": "http://localhost:11434"
+          }
+        ],
+        "tools": [
+          {
+            "component_type": "tool",
+            "name": "calculator",
+            "description": "A simple calculator that performs basic arithmetic operations between two numbers",
+            "content": "def calculator(a: float, b: float, operator: str) -> str:\n    try:\n        if operator == '+':\n            return str(a + b)\n        elif operator == '-':\n            return str(a - b)\n        elif operator == '*':\n            return str(a * b)\n        elif operator == '/':\n            if b == 0:\n                return 'Error: Division by zero'\n            return str(a / b)\n        else:\n            return 'Error: Invalid operator. Please use +, -, *, or /'\n    except Exception as e:\n        return f'Error: {str(e)}'",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "fetch_website",
+            "description": "Fetch and return the content of a website URL",
+            "content": "async def fetch_website(url: str) -> str:\n    try:\n        import requests\n        from urllib.parse import urlparse\n        \n        # Validate URL format\n        parsed = urlparse(url)\n        if not parsed.scheme or not parsed.netloc:\n            return \"Error: Invalid URL format. Please include http:// or https://\"\n            \n        # Add scheme if not present\n        if not url.startswith(('http://', 'https://')): \n            url = 'https://' + url\n            \n        # Set headers to mimic a browser request\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'\n        }\n        \n        # Make the request with a timeout\n        response = requests.get(url, headers=headers, timeout=10)\n        response.raise_for_status()\n        \n        # Return the text content\n        return response.text\n        \n    except requests.exceptions.Timeout:\n        return \"Error: Request timed out\"\n    except requests.exceptions.ConnectionError:\n        return \"Error: Failed to connect to the website\"\n    except requests.exceptions.HTTPError as e:\n        return f\"Error: HTTP {e.response.status_code} - {e.response.reason}\"\n    except Exception as e:\n        return f\"Error: {str(e)}\"",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "task_parser",
+            "description": "Analyzes input tasks and extracts key requirements, constraints, and objectives.",
+            "content": "def task_parser(task_description: str) -> dict:\n    try:\n        # Example logic to parse task description\n        parsed_task = {\n            'requirements': [],\n            'constraints': [],\n            'objectives': []\n        }\n        # Add parsing logic here\n        return parsed_task\n    except Exception as e:\n        return f'Error: {str(e)}'",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "domain_knowledge",
+            "description": "Provides domain-specific knowledge to agents.",
+            "content": {
+              "knowledge_base": [
+                {
+                  "id": "domain1",
+                  "type": "Finance",
+                  "data": [
+                    {
+                      "concept": "ROI",
+                      "definition": "Return on Investment is a financial metric used to evaluate the efficiency of an investment."
+                    }
+                  ]
+                }
+              ]
+            },
+            "tool_type": "KnowledgeBase"
+          },
+          {
+            "component_type": "tool",
+            "name": "model_trainer",
+            "description": "Trains and fine-tunes models for text generation tasks.",
+            "content": {
+              "training_data": [
+                {
+                  "id": "task1",
+                  "type": "Text Generation",
+                  "data": [
+                    {
+                      "input": "This is an example input.",
+                      "output": "This is the expected output."
+                    }
+                  ]
+                }
+              ]
+            },
+            "tool_type": "ModelTrainer"
+          },
+          {
+            "component_type": "tool",
+            "name": "agent_trainer",
+            "description": "Trains individual agents using reinforcement learning or self-supervised learning.",
+            "content": {
+              "training_methods": [
+                {
+                  "id": "method1",
+                  "type": "Reinforcement Learning",
+                  "parameters": {
+                    "learning_rate": 0.01,
+                    "epochs": 100
+                  }
+                }
+              ]
+            },
+            "tool_type": "AgentTrainer"
+          },
+          {
+            "component_type": "tool",
+            "name": "deployment_manager",
+            "description": "Manages the deployment of agents in the AutoGen Studio 0.4 environment.",
+            "content": {
+              "deployment_config": [
+                {
+                  "id": "agent1",
+                  "type": "AssistantAgent",
+                  "status": "Deployed",
+                  "location": "AutoGen Studio 0.4"
+                }
+              ]
+            },
+            "tool_type": "DeploymentManager"
+          },
+          {
+            "component_type": "tool",
+            "name": "knowledge_graph",
+            "description": "A knowledge graph that stores task, model, tool, and agent configuration information.",
+            "content": {
+              "graph_data": [
+                {
+                  "id": "task1",
+                  "type": "Task",
+                  "properties": {
+                    "title": "Example Task",
+                    "description": "This is an example task."
+                  }
+                },
+                {
+                  "id": "model1",
+                  "type": "Model",
+                  "properties": {
+                    "name": "Example Model",
+                    "type": "Text Generation"
+                  }
+                }
+              ]
+            },
+            "tool_type": "KnowledgeGraph"
+          },
+          {
+            "component_type": "tool",
+            "name": "monitoring_feedback",
+            "description": "Gathers feedback from users and monitors agent performance.",
+            "content": {
+              "feedback_data": [
+                {
+                  "id": "task1",
+                  "type": "Text Generation",
+                  "feedback": [
+                    {
+                      "user": "User1",
+                      "rating": 4.5,
+                      "comment": "The agent performed well but could be faster."
+                    }
+                  ]
+                }
+              ]
+            },
+            "tool_type": "MonitoringFeedback"
+          },
+          {
+            "component_type": "tool",
+            "name": "data_preprocessing",
+            "description": "Prepares and cleans data for model training and agent tasks.",
+            "content": "def preprocess_data(data: list) -> list:\n    try:\n        # Example logic to preprocess data\n        cleaned_data = [item.strip() for item in data]\n        return cleaned_data\n    except Exception as e:\n        return f'Error: {str(e)}'",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "workflow_automation",
+            "description": "Automates workflows using StateFlow for better scalability and flexibility.",
+            "content": {
+              "workflow_config": [
+                {
+                  "id": "workflow1",
+                  "type": "Task Execution",
+                  "steps": [
+                    {
+                      "step": 1,
+                      "action": "Data Collection"
+                    },
+                    {
+                      "step": 2,
+                      "action": "Model Training"
+                    }
+                  ]
+                }
+              ]
+            },
+            "tool_type": "WorkflowAutomation"
+          },
+          {
+            "component_type": "tool",
+            "name": "api_integration",
+            "description": "Integrates external APIs for additional functionality.",
+            "content": "def fetch_api_data(api_url: str) -> dict:\n    try:\n        import requests\n        response = requests.get(api_url)\n        response.raise_for_status()\n        return response.json()\n    except Exception as e:\n        return f'Error: {str(e)}'",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "error_handler",
+            "description": "Provides robust error handling and logging for agent operations.",
+            "content": "def log_error(error_message: str) -> None:\n    try:\n        # Example logic to log errors\n        with open('error_log.txt', 'a') as f:\n            f.write(f'{error_message}\\n')\n    except Exception as e:\n        return f'Error: {str(e)}'",
+            "tool_type": "PythonFunction"
+          },
+          {
+            "component_type": "tool",
+            "name": "visualization",
+            "description": "Visualizes agent performance, task progress, and system metrics.",
+            "content": {
+              "visualization_config": [
+                {
+                  "id": "visual1",
+                  "type": "Performance Metrics",
+                  "charts": [
+                    {
+                      "name": "Accuracy Over Time",
+                      "type": "Line Chart"
+                    }
+                  ]
+                }
+              ]
+            },
+            "tool_type": "Visualization"
+          }
+        ],
+        "terminations": [
+          {
+            "component_type": "termination",
+            "description": "Terminate the conversation when the user mentions 'TERMINATE'",
+            "termination_type": "TextMentionTermination",
+            "text": "TERMINATE"
+          },
+          {
+            "component_type": "termination",
+            "description": "Terminate the conversation after 10 messages",
+            "termination_type": "MaxMessageTermination",
+            "max_messages": 10
+          },
+          {
+            "component_type": "termination",
+            "description": "Terminate the conversation when the user mentions 'TERMINATE' or after 10 messages",
+            "termination_type": "CombinationTermination",
+            "operator": "or",
+            "conditions": [
+              {
+                "component_type": "termination",
+                "description": "Terminate the conversation when the user mentions 'TERMINATE'",
+                "termination_type": "TextMentionTermination",
+                "text": "TERMINATE"
+              },
+              {
+                "component_type": "termination",
+                "description": "Terminate the conversation after 10 messages",
+                "termination_type": "MaxMessageTermination",
+                "max_messages": 10
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
