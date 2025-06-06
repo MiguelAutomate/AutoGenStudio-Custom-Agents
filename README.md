@@ -1,6 +1,6 @@
 # AutoGen Studio 0.4 Custom Agents
 
-![AutoGen Logo](https://raw.githubusercontent.com/microsoft/autogen/main/website/static/img/autogen_logo.png)
+![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)
 
 A collection of custom agents, tools, and configurations for AutoGen Studio 0.4, extending the default capabilities with specialized components for enhanced human-in-loop conversations and task automation.
 
