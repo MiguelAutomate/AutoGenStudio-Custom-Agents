@@ -46,4 +46,4 @@ A collection of custom agents, tools, and configurations for AutoGen Studio 0.4,
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/MiguelAutomate/autogenstudio-custom-agents.git
+   git clone https://github.com/MiguelAutomate/AutoGenStudio-Custom-Agents.git
