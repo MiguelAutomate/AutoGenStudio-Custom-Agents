@@ -1,4 +1,4 @@
-![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)# AutoGen Studio 0.4 Custom Agents
+# ![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg) | AutoGen Studio 0.4 Custom Agents
 
 ![AutoGen Landing](https://media.githubusercontent.com/media/microsoft/autogen/main/autogen-landing.jpg)
 
