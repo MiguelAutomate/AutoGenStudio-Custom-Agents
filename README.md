@@ -1,6 +1,5 @@
-# AutoGen Studio 0.4 Custom Agents  ![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)
+![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)# AutoGen Studio 0.4 Custom Agents
 
-![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)
 ![AutoGen Landing](https://media.githubusercontent.com/media/microsoft/autogen/main/autogen-landing.jpg)
 
 **Unlock unparalleled automation and human-AI collaboration with a curated suite of specialized agents, tools, and configurations for AutoGen Studio 0.4.** This collection extends default capabilities with powerful components for enhanced human-in-loop conversations and complex task automation.
