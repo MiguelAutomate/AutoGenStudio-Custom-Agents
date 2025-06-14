@@ -1,6 +1,7 @@
 # AutoGen Studio 0.4 Custom Agents
 
 ![AutoGen Logo](https://microsoft.github.io/autogen/dev//_static/logo.svg)
+![AutoGen Landing](https://media.githubusercontent.com/media/microsoft/autogen/main/autogen-landing.jpg)
 
 A collection of custom agents, tools, and configurations for AutoGen Studio 0.4, extending the default capabilities with specialized components for enhanced human-in-loop conversations and task automation.
 
@@ -33,17 +34,18 @@ A collection of custom agents, tools, and configurations for AutoGen Studio 0.4,
 
 ### Tools
 - **Basic Tools**: Calculator, website fetcher
-- **Advanced Tools**: 
-  - Task parser
-  - Domain knowledge base
-  - Model trainer
-  - Workflow automation
-  - API integration
-  - Error handling
-  - Data visualization
+- **Advanced Tools**:  
+   - Task parser
+   - Domain knowledge base
+   - Model trainer
+   - Workflow automation
+   - API integration
+   - Error handling
+   - Data visualization
 
 ## Installation
 
 1. Clone this repository:
-   ```bash
-   git clone https://github.com/MiguelAutomate/AutoGenStudio-Custom-Agents.git
+    ```bash
+    git clone [https://github.com/MiguelAutomate/AutoGenStudio-Custom-Agents.git](https://github.com/MiguelAutomate/AutoGenStudio-Custom-Agents.git)
+    ```
